@@ -4,9 +4,8 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="http://bulma.io">
-          <img class="logo" src="https://pmcdeadline2.files.wordpress.com/2016/07/logo-tv-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-        </a>
-
+        <img class="logo" src="https://pmcdeadline2.files.wordpress.com/2016/07/logo-tv-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+      </a>
       <button class="button navbar-burger">
           <span></span>
           <span></span>
@@ -174,49 +173,5 @@ export default {
       })
     }
   }
-};
+}
 </script>
-
-<style lang="sass">
-.navbar
-  box-shadow: 0px 0px 6px #e6e6e6
-  border-bottom: 1px solid #e0e0e0
-  position: sticky
-  background: #f7f7f7
-  a
-    color: #777
-    font-size: 0.9rem
-    font-weight: 700
-img.navbar-item
-  width: 68px !important
-  height: 50px !important
-  border-radius: 50%
-.logo
-  width: 48px !important
-.contents
-  margin-top: 30px
-  ul
-    li
-      display: inline-block
-      margin: 0 1%
-      padding: 8px
-      width: 23.3333%
-      min-height: 200px
-.keep
-  border-right: 1px solid #e0e0e0
-  padding: 2%
-  box-shadow: 0px 0px 6px #e6e6e6
-  height: 100vh
-  .group-field
-    position: fixed
-    width: 13.5%
-.card
-  input
-    border: none
-    border-bottom: 1px solid #e0e0e0
-    width: 99%
-  textarea
-    width: 99%
-    border: none
-    border-bottom: 1px solid #e0e0e0
-</style>
