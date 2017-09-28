@@ -1,6 +1,6 @@
 # firebase-auth-test
 
-> A Vue.js project
+> A Vue.js project using firebase 
 
 ## Build Setup
 
