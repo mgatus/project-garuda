@@ -8,8 +8,6 @@
 //   storageBucket: "vuekeep-53f72.appspot.com",
 //   messagingSenderId: "619538627737"
 // };
-
-
 import {initializeApp} from 'firebase'
 
 const app = initializeApp(
