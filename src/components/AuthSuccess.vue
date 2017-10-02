@@ -14,7 +14,7 @@
     </div>
     <div class="navbar-menu" id="navMenu">
       <div class="navbar-end">
-        <a class="navbar-item is-hidden-desktop-only" href="about">About</a>
+        <a class="navbar-item is-hidden-desktop-only" href="/about">About</a>
         <a class="navbar-item is-hidden-desktop-only" @click='logOut'>Log out</a>
         <img class="navbar-item is-hidden-desktop-only" :src="photo">
       </div>
@@ -136,7 +136,12 @@ export default {
   },
   methods: {
     logOut() {
-      firebase.auth().signOut();
+      firebase.auth().signOut().then(function() {
+        location.reload()
+      }).catch(function(error) {
+        // An error happened.
+      });
+
     },
     submitContent() {
       titleRef.push({

@@ -21,6 +21,12 @@ $mainColor: #df1b33
 a
   color: $mainColor
 
+.sign-in-form
+  max-width: 360px
+  margin: 0 auto
+  border: 1px solid #e0e0e0
+  padding: 30px
+
 .navbar-item img
   width: 100px
 
@@ -51,7 +57,7 @@ img.navbar-item
       display: inline-block
       margin: 0 1%
       padding: 8px
-      width: 40%
+      width: 18%
       min-height: 200px
 .keep
   border-right: 1px solid #e0e0e0

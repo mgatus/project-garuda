@@ -1,5 +1,8 @@
 <template lang="html">
-  About here
+  <div id="app">
+    <h1>About here</h1>
+    <a href="/success">Home</a>
+  </div>
 </template>
 
 <script>

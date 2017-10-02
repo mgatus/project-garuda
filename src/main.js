@@ -6,8 +6,6 @@ import firebaseui from 'firebaseui';
 import router from './router'
 import {app} from './helpers/firebaseConfig'
 
-
-
 Vue.use(VueRouter)
 
 new Vue({
@@ -15,7 +13,7 @@ new Vue({
   created() {
     firebase.auth().onAuthStateChanged((user)=> {
       if(user) {
-        this.$router.push('/success')
+        this.$router.forward('/success')
       } else {
         this.$router.push('/auth')
       }
