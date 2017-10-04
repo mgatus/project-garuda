@@ -16,7 +16,7 @@ const app = initializeApp(
     authDomain: "vuekeep-53f72.firebaseapp.com",
     databaseURL: "https://vuekeep-53f72.firebaseio.com",
     projectId: "vuekeep-53f72",
-    storageBucket: "",
+    storageBucket: "vuekeep-53f72.appspot.com",
     messagingSenderId: "619538627737"
   }
 )
