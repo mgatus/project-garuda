@@ -115,8 +115,6 @@ import {titleRef} from './../helpers/firebaseConfig'
 Vue.use(vueFire)
 Vue.use(VueMasonryPlugin)
 
-console.log(titleRef)
-
 export default {
   data() {
     return {
@@ -128,7 +126,6 @@ export default {
       title: '',
       content: '',
       image: '',
-      downloadURL: '',
       h: ''
     }
   },
@@ -164,47 +161,26 @@ export default {
         var filename = this.image.name
         var storageRef = firebase.storage().ref('/keepImages/' + filename)
         var uploadTask = storageRef.put(this.image)
-        this.downloadURL = this.h
+        var stRef = storageRef.child('/keepImages/' + filename)
 
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
+
+
         uploadTask.on('state_changed', function(snapshot){
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-              console.log('Upload is paused');
-              break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-              console.log('Upload is running');
-              break;
-          }
-        }, function(error) {
-          // Handle unsuccessful uploads
-        }, function() {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          this.downloadURL = uploadTask.snapshot.downloadURL;
-          console.log('this url is'+ this.downloadURL)
-        });
-
-        titleRef.push({
-          title: this.title,
-          content: this.content,
-          edit: false
+          // console.log('this url is'+ uploadTask.snapshot.downloadURL)
+          // console.log(stRef)
         })
 
+        console.log(uploadTask)
+        // titleRef.push({
+        //   title: this.title,
+        //   content: this.content,
+        //   edit: false
+        // })
         this.title = ""
         this.content = ""
         this.image = ""
         this.$redrawVueMasonry()
-        alert('this url is'+ this.downloadURL)
       }
-
     },
     deleteContent(key) {
       titleRef.child(key).remove()
