@@ -64,6 +64,7 @@
           <div class="noedit" v-if="!content.edit">
             <div class="card">
               <header class="card-header">
+
                 <p class="card-header-title">
                   {{content.title}}
                 </p>
@@ -71,6 +72,7 @@
               <div class="card-content">
                 <img :src="image" />
                 <div class="content">
+                  <img v-bind:src="content.imgUrl" alt="">
                   {{content.content}}
                 </div>
               </div>
@@ -126,7 +128,8 @@ export default {
       title: '',
       content: '',
       image: '',
-      h: ''
+      h: '',
+      file: ''
     }
   },
   firebase: {
@@ -154,6 +157,7 @@ export default {
 
     },
     submitContent() {
+      var self = this
       if(this.title === '' || this.content === '') {
         alert('Add something dude!')
         return false
@@ -162,20 +166,36 @@ export default {
         var storageRef = firebase.storage().ref('/keepImages/' + filename)
         var uploadTask = storageRef.put(this.image)
         var stRef = storageRef.child('/keepImages/' + filename)
+        var self = this
 
-
-
+        var titleA = this.title
+        var contentA = this.content
+        var edit = false
         uploadTask.on('state_changed', function(snapshot){
-          // console.log('this url is'+ uploadTask.snapshot.downloadURL)
-          // console.log(stRef)
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log('Upload is running');
+              break;
+          }
+        }, function(error) {
+          alert("Error on Uploading image")
+        }, function() {
+          var downloadURL = uploadTask.snapshot.downloadURL;
+          titleRef.push({
+            title: titleA,
+            content: contentA,
+            imgUrl: downloadURL,
+            edit: false
+          })
         })
 
-        console.log(uploadTask)
-        // titleRef.push({
-        //   title: this.title,
-        //   content: this.content,
-        //   edit: false
-        // })
         this.title = ""
         this.content = ""
         this.image = ""

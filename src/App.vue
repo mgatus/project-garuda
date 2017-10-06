@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="sass">
-$mainColor: #df1b33
+$mainColor: rgb(1, 209, 177)
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
@@ -34,10 +34,11 @@ a
   box-shadow: 0px 0px 6px #e6e6e6
   border-bottom: 1px solid #e0e0e0
   position: sticky
-  background: $mainColor
+  background: #fbfbfb
   a
-    color: #e2e2e2
+    color: $mainColor
     font-size: 0.9rem
+    font-weight: 700
 .button
   background-color: $mainColor !important
   color: #fff !important
