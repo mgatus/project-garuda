@@ -26,37 +26,40 @@
     <p>{{userId}}</p> -->
   <!-- <pre>{{user}}</pre> -->
   <div class="columns form-the-keep">
+    <div class="mainLoader" id="mainLoader" v-if="loading">
+      Loading...
+    </div>
     <div class="keep column is-2">
       <div class="group-field">
         <div class="field">
-        <label class="label">Add Keep</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Add Keep Title" v-model="title">
+          <label class="label">Add Keep</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Add Keep Title" v-model="title">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Take note</label>
+          <div class="control">
+            <textarea class="textarea" placeholder="Take note" v-model="content"></textarea>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Upload Image</label>
+          <div class="control">
+            <input type="file" name="" value="" id="file" @change="onFileChange">
+          </div>
+        </div>
+
+
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" @click="submitContent">Submit</button>
+          </div>
         </div>
       </div>
-
-      <div class="field">
-        <label class="label">Take note</label>
-        <div class="control">
-          <textarea class="textarea" placeholder="Take note" v-model="content"></textarea>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Upload Image</label>
-        <div class="control">
-          <input type="file" name="" value="" id="file" @change="onFileChange">
-        </div>
-      </div>
-
-
-
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-primary" @click="submitContent">Submit</button>
-        </div>
-      </div>
-    </div>
     </div>
     <div class="contents column is-10">
       <ul v-masonry transition-duration="0.3s" item-selector=".item">
@@ -72,12 +75,15 @@
               <div class="card-content">
                 <img :src="image" />
                 <div class="content">
+                  <div v-if="loading" id="loading">
+                    Loading...
+                  </div>
                   <img v-bind:src="content.imgUrl" alt="">
                   {{content.content}}
                 </div>
               </div>
               <footer class="card-footer">
-                <a href="#" class="card-footer-item"  @click="editContent(content['.key'])">Edit</a>
+                <a href="#" class="card-footer-item" @click="editContent(content['.key'])">Edit</a>
                 <a href="#" class="card-footer-item" @click="deleteContent(content['.key'])">Delete</a>
               </footer>
             </div>
@@ -91,11 +97,19 @@
               </header>
               <div class="card-content">
                 <div class="content">
-                  <textarea name="name"  v-model="content.content"></textarea>
+                  <textarea name="name" v-model="content.content"></textarea>
                 </div>
               </div>
+
+              <div class="field">
+                <label class="label">Upload Image</label>
+                <div class="control">
+                  <input type="file" name="" value="" id="file" @change="onFileChange">
+                </div>
+              </div>
+
               <footer class="card-footer">
-                <a href="#" class="card-footer-item"  @click="saveEdit(content)">Save</a>
+                <a href="#" class="card-footer-item" @click="saveEdit(content)">Save</a>
                 <a href="#" class="card-footer-item" @click="cancelEdit(content['.key'])">Cancel</a>
               </footer>
             </div>
@@ -111,11 +125,16 @@
 import Vue from 'vue'
 import vueFire from 'vuefire'
 import firebase from 'firebase'
-import {VueMasonryPlugin} from 'vue-masonry'
-import {titleRef} from './../helpers/firebaseConfig'
+import {
+  VueMasonryPlugin
+} from 'vue-masonry'
+import {
+  titleRef
+} from './../helpers/firebaseConfig'
 
 Vue.use(vueFire)
 Vue.use(VueMasonryPlugin)
+var testa = false
 
 export default {
   data() {
@@ -129,7 +148,8 @@ export default {
       content: '',
       image: '',
       h: '',
-      file: ''
+      file: '',
+      loading: false
     }
   },
   firebase: {
@@ -158,36 +178,59 @@ export default {
     },
     submitContent() {
       var self = this
-      if(this.title === '' || this.content === '') {
+      if (this.title === '' || this.content === '') {
         alert('Add something dude!')
         return false
       } else {
+
         var filename = this.image.name
         var storageRef = firebase.storage().ref('/keepImages/' + filename)
         var uploadTask = storageRef.put(this.image)
         var stRef = storageRef.child('/keepImages/' + filename)
-        var self = this
+
 
         var titleA = this.title
         var contentA = this.content
-        var edit = false
-        uploadTask.on('state_changed', function(snapshot){
+
+        this.loading = true
+        var loader
+
+        // this.loading = loadingStatus(a) {
+        //   console(a);
+        // };
+
+        function valData(bool) {
+          // console.log('self loading '+ self.loading)
+          self.loading = bool;
+          console.log('val: '+self.loading);
+        };
+
+        uploadTask.on('state_changed', function(snapshot) {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
+          //console.log('Upload is ' + progress + '% done');
+          // this.loading = true
+          valData(true);
           switch (snapshot.state) {
             case firebase.storage.TaskState.PAUSED: // or 'paused'
-              console.log('Upload is paused');
+              //console.log('Upload is paused');
               break;
             case firebase.storage.TaskState.RUNNING: // or 'running'
-              console.log('Upload is running');
+              //console.log('Upload is running');
               break;
           }
         }, function(error) {
           alert("Error on Uploading image")
+          // this.loading = false
+          valData(false);
         }, function() {
           var downloadURL = uploadTask.snapshot.downloadURL;
+
+          valData(false);
+
+console.log('aaaaa: '+testa);
+
           titleRef.push({
             title: titleA,
             content: contentA,
@@ -199,8 +242,13 @@ export default {
         this.title = ""
         this.content = ""
         this.image = ""
+        document.getElementById('file').value = ''
         this.$redrawVueMasonry()
+        // this.loading = false
       }
+    },
+    uploadToStorage() {
+
     },
     deleteContent(key) {
       titleRef.child(key).remove()
@@ -233,3 +281,18 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  #mainLoader
+    position: absolute
+    z-index: 9
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    background: rgba(105, 105, 105, 0.44)
+    display: flex
+    align-items: center
+    justify-content: center
+    color: #fff
+</style>
