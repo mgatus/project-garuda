@@ -75,7 +75,7 @@
       </div>
       <div class="contents column is-12">
         <ul v-masonry transition-duration="0.3s" item-selector=".item">
-          <li v-masonry-tile class="item" v-for="content of contents" v-bind:key="content['.key']">
+          <li v-masonry-tile class="item" v-for="content of reverseit" v-bind:key="content['.key']">
             <div class="noedit" v-if="!content.edit">
               <div class="card">
                 <header class="card-header">
@@ -155,6 +155,14 @@ export default {
   },
   firebase: {
     contents: titleRef
+  },
+  watch() {
+    this.aa()
+  },
+  computed: {
+    reverseit: function() {
+      return this.contents.reverse()
+    }
   },
   created() {
     var vm = this
@@ -275,6 +283,9 @@ export default {
     },
     modalOff() {
       this.activeModal = false
+    },
+    aa() {
+      return this.contents.reverse()
     }
   }
 }
