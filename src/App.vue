@@ -33,6 +33,7 @@ a
 .navbar
   box-shadow: 0px 0px 6px #e6e6e6
   border-bottom: 1px solid #e0e0e0
+  border-right: 1px solid #e0e0e0
   position: sticky
   background: #fbfbfb
   a

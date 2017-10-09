@@ -1,9 +1,9 @@
 <template>
   <div class="sign-up">
     <p>Let's create a new account !</p>
-    <input type="text" v-model="email" placeholder="Email"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <button v-on:click="signUp">Sign Up</button>
+    <input type="text" class="input" v-model="email" placeholder="Email"><br>
+    <input type="password" class="input" v-model="password" placeholder="Password"><br>
+    <button class="button" v-on:click="signUp">Sign Up</button><br>
     <span>or go back to <a @click="backToHome">login</a>.</span>
   </div>
 </template>
@@ -31,29 +31,23 @@
         );
       },
       backToHome: function() {
-            this.$router.go('/auth');
+        this.$router.go(0)
+        this.$router.push('/auth')
       }
     }
   }
 </script>
 
-<style scoped>
-  .signUp {
-    margin-top: 40px;
-  }
-  input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-  }
-  button {
-    margin-top: 10px;
-    width: 10%;
-    cursor: pointer;
-  }
-  span {
-    display: block;
-    margin-top: 20px;
-    font-size: 11px;
-  }
+<style scoped lang="sass">
+
+  .sign-up
+    max-width: 360px
+    margin: 0 auto
+    padding: 30px
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    height: 100vh
+
 </style>

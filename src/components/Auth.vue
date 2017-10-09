@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="sign-options">
     <h1>Sign in options</h1>
-    <router-link to="/manualsignin" class="button">Manual Sign In</router-link><br><br>
+    <router-link to="/manualsignin" class="button">Manual Sign In</router-link>
     <router-link to="/signup" class="button">Sign Up Here!</router-link>
     <div id="firebaseui-auth-container"></div>
   </div>
@@ -31,3 +31,16 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .sign-options
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 100vh
+    flex-direction: column
+    a
+      margin-top: 15px
+      min-width: 187px
+      box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2)
+</style>

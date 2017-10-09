@@ -50,8 +50,18 @@ export default {
         );
       },
       backToHome: function() {
-            this.$router.go('/auth');
+        this.$router.go(0)
+        this.$router.push('/auth')
       }
     }
 }
 </script>
+
+<style scoped lang="sass">
+  .sign-in-container
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 100vh
+    flex-direction: column
+</style>
