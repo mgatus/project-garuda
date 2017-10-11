@@ -18,6 +18,18 @@ $mainColor: rgb(1, 209, 177)
   -moz-osx-font-smoothing: grayscale
   text-align: center
   color: #2c3e50
+
+
+.sign-options
+  background: url("./assets/bg.jpg")
+  background-size: cover
+  color: #fff
+
+nav[role="navigation"]
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
 a
   color: $mainColor
 
@@ -53,13 +65,13 @@ img.navbar-item
   width: 48px !important
   max-height: initial !important
 .contents
-  margin-top: 30px
+  margin-top: 0px
   ul
     li
       display: inline-block
-      margin: 0 1%
+      margin: 0 0.1%
       padding: 8px
-      width: 18%
+      width: 15%
       min-height: 200px
 .keep
   border-right: 1px solid #e0e0e0

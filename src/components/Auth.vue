@@ -39,6 +39,7 @@ export default {
     justify-content: center
     height: 100vh
     flex-direction: column
+    
     a
       margin-top: 15px
       min-width: 187px

@@ -2,13 +2,12 @@
 <div class="columns">
   <div class="loading" v-if="loadingActive">
     <div class="load-status">
-      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-<span class="sr-only">Uploading...</span>
+      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><br>
+      <span class="statusload">Uploading...</span>
     </div>
   </div>
 
-
-  <div v-bind:class="{ modalOn: activeModal }" class="modal">
+  <div v-if="activeModal" class="modal modalOn">
     <div class="modal-background"></div>
     <div class="modal-content">
       <div class="column add-form is-12">
@@ -44,11 +43,9 @@
     <button class="modal-close is-large" aria-label="close" @click="modalOff"></button>
   </div>
 
-  <nav class="navbar column is-2" role="navigation" aria-label="main navigation">
+  <nav class="navbar column is-1" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="http://bulma.io">
-        <img class="logo" src="https://pmcdeadline2.files.wordpress.com/2016/07/logo-tv-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-      </a>
+      <img class="navbar-item is-hidden-desktop-only" :src="photo">
       <button class="button navbar-burger">
           <span></span>
           <span></span>
@@ -56,10 +53,10 @@
         </button>
     </div>
     <div class="navbar-menu" id="navMenu">
-      <div class="navbar-end">
+      <div>
         <a class="navbar-item is-hidden-desktop-only" href="/about">About</a>
         <a class="navbar-item is-hidden-desktop-only" @click='logOut'>Log out</a>
-        <img class="navbar-item is-hidden-desktop-only" :src="photo">
+
       </div>
     </div>
   </nav>
@@ -68,10 +65,10 @@
     <p>{{email}}</p>
     <p>{{userId}}</p> -->
   <!-- <pre>{{user}}</pre> -->
-  <div class="column is-10">
+  <div class="column is-11 keeps">
     <div class="columns is-multiline form-the-keep">
       <div class="column add-form is-2">
-        <button type="button" name="button" @click="modalOn">Kamehame haaaa!</button>
+        <button type="button" name="button" @click="modalOn" class="addKeep"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
       </div>
       <div class="contents column is-12">
         <ul v-masonry transition-duration="0.3s" item-selector=".item">
@@ -87,7 +84,7 @@
                 <div class="card-content">
                   <div class="content">
                     <img v-bind:src="content.imgUrl" alt="">
-                    {{content.content}}
+                    <div class="content-div">{{content.content}}</div>
                   </div>
                 </div>
                 <footer class="card-footer">
@@ -126,12 +123,9 @@
 import Vue from 'vue'
 import vueFire from 'vuefire'
 import firebase from 'firebase'
-import {
-  VueMasonryPlugin
-} from 'vue-masonry'
-import {
-  titleRef
-} from './../helpers/firebaseConfig'
+
+import {VueMasonryPlugin} from 'vue-masonry'
+import {titleRef} from './../helpers/firebaseConfig'
 
 Vue.use(vueFire)
 Vue.use(VueMasonryPlugin)
@@ -156,7 +150,7 @@ export default {
   firebase: {
     contents: titleRef
   },
-  watch() {
+  mounted() {
     this.aa()
   },
   computed: {
@@ -188,7 +182,7 @@ export default {
     submitContent() {
       var self = this
       if (this.title === '' || this.content === '') {
-        alert('Add something dude!')
+        toastr.error('Yo add somethin\' dude!')
         return false
       } else {
         var filename = this.image.name
@@ -205,16 +199,16 @@ export default {
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-            document.querySelectorAll('.load-status').innerHTML = 'Upload is ' + progress + '% done';
+            document.querySelectorAll('.statusload').innerHTML = 'Upload is ' + progress + '% done';
 
             //console.log('Upload is ' + progress + '% done');
             self.loadingActive = true;
             switch (snapshot.state) {
               case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
+                console.log('Upload is paused')
                 break;
               case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
+                console.log('Upload is running')
                 break;
             }
           }, function(error) {
@@ -238,7 +232,7 @@ export default {
             imgUrl: 'Null',
             edit: false
           })
-
+          self.aa()
         }
 
         this.title = ""
@@ -285,13 +279,15 @@ export default {
       this.activeModal = false
     },
     aa() {
-      return this.contents.reverse()
+      this.contents.reverse()
     }
   }
 }
 </script>
 
 <style lang="sass" scoped>
+  $mainColor: rgb(1, 209, 177)
+
   .add-form
     width: 50%
     margin: 2% auto
@@ -317,5 +313,28 @@ export default {
 
   nav.navbar.column.is-2
     height: 100vh
+
+  .keeps
+    margin-left: 9%
+
+  .addKeep
+    border-radius: 50%
+    padding: 15px
+    width: 50px
+    height: 50px
+    box-shadow: none
+    border: none
+    color: #b3b3b3
+    transition: all 0.2s ease
+    outline: none
+    &:hover
+      background: $mainColor
+      color: #fff
+      cursor: pointer
+      box-shadow: 1px 1px 1px #333
+
+  .card-content
+    padding: 0
+    position: relative
 
 </style>

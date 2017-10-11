@@ -11,11 +11,14 @@
   "dependencies": {
     "firebase": "^4.4.0",
     "firebaseui": "^2.3.0",
+    "jquery": "^3.2.1",
+    "toastr": "^2.1.2",
     "v-file-upload": "^3.1.0",
     "vue": "^2.3.3",
     "vue-fire": "^0.1.0",
     "vue-masonry": "^0.10.12",
     "vue-router": "^2.7.0",
+    "vue-toastr": "^2.0.9",
     "vuefire": "^1.4.4"
   },
   "devDependencies": {
@@ -25,6 +28,8 @@
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
+    "less": "^3.0.0-alpha.3",
+    "less-loader": "^4.0.5",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
     "vue-loader": "^12.1.0",
