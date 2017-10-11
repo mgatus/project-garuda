@@ -30,6 +30,8 @@ nav[role="navigation"]
   top: 0
   bottom: 0
   left: 0
+  > * > *
+    margin: 0 auto
 a
   color: $mainColor
 
@@ -65,13 +67,13 @@ img.navbar-item
   width: 48px !important
   max-height: initial !important
 .contents
-  margin-top: 0px
+  margin-top: 15px
   ul
     li
       display: inline-block
       margin: 0 0.1%
       padding: 8px
-      width: 15%
+      width: 20%
       min-height: 200px
 .keep
   border-right: 1px solid #e0e0e0
@@ -90,4 +92,14 @@ img.navbar-item
     width: 99%
     border: none
     border-bottom: 1px solid #e0e0e0
+
+  .content-div ul,.editr--content ul
+    padding: 0 !important
+
+  .content-div ul li,.editr--content ul li
+    width: 100% !important
+    min-height: auto !important
+    margin: 5px 0 !important
+    padding: 0 !important
+    list-style: circle !important
 </style>

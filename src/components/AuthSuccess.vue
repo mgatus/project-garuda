@@ -22,7 +22,8 @@
           <div class="field">
             <label class="label">Take note</label>
             <div class="control">
-              <textarea class="textarea" placeholder="Take note" v-model="content"></textarea>
+              <!-- <textarea class="textarea" placeholder="Take note" v-model="content"></textarea> -->
+              <wysiwyg v-model="content" />
             </div>
           </div>
 
@@ -56,7 +57,6 @@
       <div>
         <a class="navbar-item is-hidden-desktop-only" href="/about">About</a>
         <a class="navbar-item is-hidden-desktop-only" @click='logOut'>Log out</a>
-
       </div>
     </div>
   </nav>
@@ -84,12 +84,12 @@
                 <div class="card-content">
                   <div class="content">
                     <img v-bind:src="content.imgUrl" alt="">
-                    <div class="content-div">{{content.content}}</div>
+                    <div class="content-div" v-html="content.content"></div>
                   </div>
                 </div>
                 <footer class="card-footer">
-                  <a href="#" class="card-footer-item" @click="editContent(content['.key'])">Edit</a>
-                  <a href="#" class="card-footer-item" @click="deleteContent(content['.key'])">Delete</a>
+                  <a href="#" class="card-footer-item" @click="editContent(content['.key'])"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a href="#" class="card-footer-item" @click="deleteContent(content['.key'])"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </footer>
               </div>
             </div>
@@ -102,12 +102,15 @@
                 </header>
                 <div class="card-content">
                   <div class="content">
-                    <textarea name="name" v-model="content.content"></textarea>
+                    <wysiwyg v-model="content.content" />
+                    <!-- <input type="file" name="" value="" v-bind:value="content.imgUrl"> -->
+
+                    <!-- <textarea name="name" v-model="content.content"></textarea> -->
                   </div>
                 </div>
                 <footer class="card-footer">
-                  <a href="#" class="card-footer-item" @click="saveEdit(content)">Save</a>
-                  <a href="#" class="card-footer-item" @click="cancelEdit(content['.key'])">Cancel</a>
+                  <a href="#" class="card-footer-item" @click="saveEdit(content)"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+                  <a href="#" class="card-footer-item" @click="cancelEdit(content['.key'])"><i class="fa fa-ban" aria-hidden="true"></i></a>
                 </footer>
               </div>
             </div>
@@ -127,8 +130,11 @@ import firebase from 'firebase'
 import {VueMasonryPlugin} from 'vue-masonry'
 import {titleRef} from './../helpers/firebaseConfig'
 
+import wysiwyg from "vue-wysiwyg"
+
 Vue.use(vueFire)
 Vue.use(VueMasonryPlugin)
+Vue.use(wysiwyg, {})
 
 export default {
   data() {
@@ -286,17 +292,28 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
   $mainColor: rgb(1, 209, 177)
 
   .add-form
-    width: 50%
+    width: auto
     margin: 2% auto
     background: #fff
     padding: 15px
     border-radius: 3px
+    position: absolute
+    bottom: 0
+    right: 0
 
   .modalOn
     display: flex
+    .add-form
+      width: 100%
+      margin: 2% auto
+      background: #fff
+      padding: 15px
+      border-radius: 3px
+      position: static
 
   .loading
     position: absolute
@@ -337,4 +354,13 @@ export default {
     padding: 0
     position: relative
 
+  .content-div
+    font-size: 0.75rem
+    padding: 15px
+    text-align: left
+
+</style>
+
+<style lang="css" scoped>
+  @import "~vue-wysiwyg/dist/vueWysiwyg.css";
 </style>
